@@ -4,7 +4,7 @@
     <groupId>com.phenix</groupId>
     <artifactId>xmlbaton</artifactId>
     <name>XMLBaton</name>
-    <version>0.9.0</version>
+    <version>0.9.1</version>
     <packaging>jar</packaging>
     <url>https://github.com/edouard333/XMLBaton</url>
     
@@ -16,7 +16,7 @@
     </developers>
     
     <build>
-        <!-- Nom du Jar par défaut. -->
+        <!-- Nom du JAR par défaut. -->
         <finalName>${project.name}-${project.version}</finalName>
         
         <plugins>
@@ -57,7 +57,7 @@
         <dependency>
             <groupId>com.phenix</groupId>
             <artifactId>timecode</artifactId>
-            <version>0.6.0</version>
+            <version>0.7.0</version>
         </dependency>
     </dependencies>
     
