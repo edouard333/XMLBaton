@@ -147,8 +147,8 @@ public class ListeErreur {
      * @param list Le node où on doit chercher.
      * @param name Nom du node à trouver.
      *
-     * @return Retourne le node demandé, sinon retourne {@code null} s'il
-     * ne trouve pas.
+     * @return Retourne le node demandé, sinon retourne {@code null} s'il ne
+     * trouve pas.
      */
     private NodeList findNodeListByName(NodeList list, String name) {
         for (int i = 0; i < list.getLength(); i++) {
@@ -202,30 +202,35 @@ public class ListeErreur {
                         String item = element.hasAttribute("item") ? element.getAttribute("item") : "";
 
                         if (item.equals("Defective Pixel")) {
-                            ArrayList<Pixel> liste_pixel = new ArrayList<Pixel>();
+                            // On doit s'assurer qu'il ne s'agit pas d'une information qu'il y a plus de 10000 erreurs :
+                            if (!description.contains("The check on Defective Pixel failed ")) {
+                                ArrayList<Pixel> liste_pixel = new ArrayList<Pixel>();
 
-                            // Récupère les positions du/des pixel(s) :
-                            Node param = ((Element) element.getElementsByTagName("Params").item(0)).getElementsByTagName("Param").item(0);
-                            String coordonnees = ((Element) param).getAttribute("Value"); // Récupère le 1er car il n'y en a qu'un.
+                                // Récupère les positions du/des pixel(s) :
+                                Node param = ((Element) element.getElementsByTagName("Params").item(0)).getElementsByTagName("Param").item(0);
+                                String coordonnees = ((Element) param).getAttribute("Value"); // Récupère le 1er car il n'y en a qu'un.
 
-                            String[] liste = coordonnees.split("\\D");
+                                String[] liste = coordonnees.split("\\D");
 
-                            String liste_nombre = "";
+                                String liste_nombre = "";
 
-                            for (int j = 0; j < liste.length; j++) {
-                                liste_nombre += " " + liste[j];
+                                for (int j = 0; j < liste.length; j++) {
+                                    liste_nombre += " " + liste[j];
+                                }
+
+                                int nb_pixel = (liste_nombre.split("\\s+").length - 1) / 2;
+
+                                Scanner sc = new Scanner(liste_nombre);
+
+                                for (int nombre = 0; nombre < nb_pixel; nombre++) {
+                                    liste_pixel.add(new Pixel(sc.nextInt(), sc.nextInt()));
+                                }
+
+                                sc.close();
+                                this.liste_erreur_baton.add(new ErreurBatonDefectivePixel(description, FrameDuration, smptetimecode, endsmptetimecode, item, this.codec, liste_pixel));
+                            } else {
+                                System.out.println("Log : '" + i + "' concerne la remarque comme quoi il y a plus de 10.000 erreurs de defective pixel.");
                             }
-
-                            int nb_pixel = (liste_nombre.split("\\s+").length - 1) / 2;
-
-                            Scanner sc = new Scanner(liste_nombre);
-
-                            for (int nombre = 0; nombre < nb_pixel; nombre++) {
-                                liste_pixel.add(new Pixel(sc.nextInt(), sc.nextInt()));
-                            }
-
-                            sc.close();
-                            this.liste_erreur_baton.add(new ErreurBatonDefectivePixel(description, FrameDuration, smptetimecode, endsmptetimecode, item, this.codec, liste_pixel));
                         } else {
                             // On ajoute les erreurs que si elles ont une durée (les remarques générales ne nous intéresse pas).
                             if (FrameDuration != -1) {
@@ -258,8 +263,7 @@ public class ListeErreur {
     }
 
     /**
-     * Retourne la liste d'erreur avec un seul type d'erreur, reçu en
-     * paramètre.
+     * Retourne la liste d'erreur avec un seul type d'erreur, reçu en paramètre.
      *
      * @param type_erreur Type d'erreur qu'on veut.
      * @return La liste d'erreur.
