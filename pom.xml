@@ -4,7 +4,7 @@
     <groupId>com.phenix</groupId>
     <artifactId>xmlbaton</artifactId>
     <name>XMLBaton</name>
-    <version>0.9.2</version>
+    <version>0.9.3</version>
     <packaging>jar</packaging>
     <url>https://github.com/edouard333/XMLBaton</url>
     
@@ -24,7 +24,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -57,7 +57,7 @@
         <dependency>
             <groupId>com.phenix</groupId>
             <artifactId>timecode</artifactId>
-            <version>0.7.0</version>
+            <version>0.7.1</version>
         </dependency>
     </dependencies>
     
@@ -68,7 +68,7 @@
         <!-- Type d'application : "graphic", "console" ou "library". -->
         <appType>library</appType>
         <!-- Nom de l'application. -->
-        <appName>XML Baton</appName>
+        <appTitle>XML Baton</appTitle>
         <!-- Pour l'instant comme ça pour indiquer la version. -->
         <appVersion>${project.version}</appVersion>
     </properties>
