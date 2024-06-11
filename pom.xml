@@ -4,7 +4,7 @@
     <groupId>com.phenix</groupId>
     <artifactId>xmlbaton</artifactId>
     <name>XMLBaton</name>
-    <version>0.9.3</version>
+    <version>0.9.4</version>
     <packaging>jar</packaging>
     <url>https://github.com/edouard333/XMLBaton</url>
     

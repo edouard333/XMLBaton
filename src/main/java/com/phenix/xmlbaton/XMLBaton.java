@@ -78,7 +78,12 @@ public class XMLBaton {
     /**
      * L'extension du fichier XML Baton.
      */
-    public static final String EXTENSION = ".xml";
+    public static final String[] LISTE_EXTENSION = new String[]{".xml", ".bvr"};
+
+    /**
+     * Nom du test plan utilisé pour le rapport.
+     */
+    private String test_plan;
 
     /**
      * Récupérer des informations d'un rapport Baton formaté en XML.
@@ -97,6 +102,12 @@ public class XMLBaton {
 
             // On récupère directement les enfants.
             this.racineNoeuds = this.racine.getChildNodes();
+
+            NodeList nodelist_taskinfo = this.racine.getElementsByTagName("taskinfo");
+            // Si on est dans un BVR (XML), on a les informations sur le test plan.
+            if (nodelist_taskinfo.getLength() > 0) {
+                this.test_plan = ((Element) nodelist_taskinfo.item(0)).getAttribute("testPlan");
+            }
 
             // On parcourt les nodes :
             for (int i = 0; i < this.racineNoeuds.getLength(); i++) {
@@ -275,5 +286,15 @@ public class XMLBaton {
      */
     public String getStartTC() {
         return this.tcstart;
+    }
+
+    /**
+     * Retourne le nom du test plan utilisé.<br>
+     * Note : ne peut être récupéré que d'un BVR.
+     *
+     * @return Le nom du test plan.
+     */
+    public String getTestPlan() {
+        return this.test_plan;
     }
 }
